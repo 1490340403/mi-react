@@ -1,0 +1,12 @@
+.wrapper{
+    width: 100%;
+    white-space: nowrap; //让子元素超出不换行
+    padding: 25px 13px;
+    box-sizing: border-box;
+    overflow: hidden;
+    .content{
+        li{
+            height:40px;
+        }
+    }
+    }
