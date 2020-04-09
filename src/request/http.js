@@ -1,12 +1,41 @@
 import axios from './index'
-export const register=(url,params)=>axios.post(url,params)
-export const getIndexData=(url,params={})=>axios.get(url,{
+//注册
+export const register=(params)=>axios.post('/user/register',params)
+//登录
+export const login=(params)=>axios.post('/user/login',params)
+//退出登录
+export const logout=()=>axios.post('/user/logout')
+//获取首页列表数据
+export const getHomeData=(params={pageSize:10,pageNum:1})=>axios.get('/products',{
     params:{
         params
     }
 })
-export const proDetail=(url,params={})=>axios.get(url,{
-    params:{
-        params
-    }
-})
+//获取产品详情
+export const proDetail=(id)=>axios.get(`/products/${id}`)
+//购物车列表
+export const cartList=()=>axios.get('/carts')
+//购物车加商品
+export const addCart=(productId)=axios.post('/carts',{selectes:true,productId})
+//更新购物城产品
+export const updateNum=(productId,quantity)=>axios.put(`/carts/${productId}`,{quantity,selected: true})
+//移除购物车某个产品
+export const deleteCart=(productId)=>axios.delete(`/carts/${productId}`)
+//购物车全选中
+export const selectAll=()=>axios.put('/carts/selectAll')
+//购物车全部不选中
+export const unSelectAll=()=>axios.put('/carts/unSelectAll')
+//获取购物中所有商品数量总和
+export const Sum=()=>axios.get('/carts/products/sum')
+//添加地址
+export const address=(params)=>axios.post('/shippings',params)
+//删除地址
+export const delAddress=(shippingId)=>axios.delete(`/shippings/${shippingId}`)
+//登录状态更新地址
+export const updateAddress=(shippingId,params)=>axios.put(`/shippings/${shippingId}`,params)
+//选中查看具体的地址
+export const lookAddress=(shippingId)=>axios.get(`/shipping/${shippingId}`)
+//地址列表
+export const addressList=()=>axios.get('/shipping')
+//支付方式
+export const pay=(params)=>axios.post('/pay',params)
