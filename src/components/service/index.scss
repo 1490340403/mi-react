@@ -1,0 +1,46 @@
+.service{
+    width:1226px;
+    padding: 33px 0;
+    color: #666;
+    font-size: 16px;
+    background:#fff;
+    margin:0 auto;
+    li{
+        display: inline-block;
+        width: 24.9%;
+        text-align: center;
+        border-right: 1px solid #e5e5e5;
+        .icon-setting{
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            background:url('/imgs/icon-setting.png') no-repeat center;
+            background-size:contain;
+        }
+        .icon-7day{
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            background:url('/imgs/icon-7day.png') no-repeat center;
+            background-size:contain;
+        }
+        .icon-15day{
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            background:url('/imgs/icon-15day.png') no-repeat center;
+            background-size:contain;
+        }
+        .icon-post{
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            background:url('/imgs/icon-post.png') no-repeat center;
+            background-size:contain;
+        }
+    }
+}

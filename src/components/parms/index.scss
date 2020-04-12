@@ -1,0 +1,30 @@
+.params_box{
+    background:#fff;
+    line-height: 70px;
+    &.isFixed{
+        position: fixed;
+        top:0;
+        width:100%;
+        z-index: 99;
+    }
+    .container{
+        width:1226px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        .params_title{
+            font-size: 18px;
+            color: #333;
+            line-height: 70px;
+            font-weight: 700;
+        }
+        .params{
+            a{
+                color:#666;
+            }
+            span{
+                margin:0 10px;
+            }
+        }
+    }
+}
