@@ -20,12 +20,7 @@ export const proDetail=()=>axios.get(`/products`,{
     }
 })
 //获取产品详情
-export const proDetails=(categoryId)=>axios.get(`/products`,{
-    params:{
-        categoryId,
-        pageSize:6
-    }
-})
+export const proDetails=(categoryId)=>axios.get(`/products/${categoryId}`)
 //首页轮播
 export const slideData=()=>axios.get('/products',{
     params:{
