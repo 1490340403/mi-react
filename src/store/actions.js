@@ -12,7 +12,7 @@ import {
     SLIDE_DATA
 } from './actionType.js'
 import cookie from 'react-cookies'
-import {proDetail,slideData,proDetails,login,info,addCart} from '../request/http'
+import {proDetail,slideData,proDetails,login,info,addCart,cartList} from '../request/http'
  const changeBtnTextType = () => ({ type: HOME_DATA, num: 2})
 export const changeBtnText=()=>{
     return dispatch=>{
@@ -84,5 +84,15 @@ export const add_car=(productId)=>{
         const data = await addCart(productId)
         console.log(data)
         dispatch(addCar_type(data))
+    }
+}
+const carList_type=(data)=>({
+    type:CART_LIST,
+    data
+})
+export const getCarList=()=>{
+    return async dispatch=>{
+        const data=await cartList()
+        dispatch(carList_type(data))
     }
 }

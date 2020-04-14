@@ -29,7 +29,7 @@ export const slideData=()=>axios.get('/products',{
     }
 })
 // //购物车列表
-// export const cartList=()=>axios.get('/carts')
+ export const cartList=()=>axios.get('/carts')
 // 购物车加商品
 export const addCart=(productId)=>axios.post('/carts',{selected:true,productId})
 // //更新购物城产品
