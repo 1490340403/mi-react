@@ -36,7 +36,6 @@ class Detail extends React.Component{
     this.setState({
       id
     })
-    console.log(id)
     this.props.getProductDetail(id)
   }
   addCar=()=>{
@@ -87,7 +86,6 @@ class Detail extends React.Component{
           </div>
           <div className="item-version clearfix">
             <h2>选择版本</h2>
-            {console.log(this.state.checkNum,9)}
              <div  className={this.state.checkNum==1?'checked phone fl':'phone fl'} onClick={()=>this.changState(1)}>6GB+64GB 全网通</div>
             <div className={this.state.checkNum==2?'checked phone fr':'phone fr'} onClick={()=>this.changState(2)}>4GB+64GB 移动4G</div> 
           </div>

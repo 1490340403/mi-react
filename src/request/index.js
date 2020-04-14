@@ -1,5 +1,4 @@
 import axios from 'axios'
-console.log(axios,axios.defauls,998)
 axios.defaults.baseURL = '/api'
 axios.defaults.withCredentials = true
 axios.defaults.timeout = 100000

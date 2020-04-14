@@ -33,13 +33,13 @@ export const slideData=()=>axios.get('/products',{
 // 购物车加商品
 export const addCart=(productId)=>axios.post('/carts',{selected:true,productId})
 // //更新购物城产品
-// export const updateNum=(productId,quantity)=>axios.put(`/carts/${productId}`,{quantity,selected: true})
+ export const updateNum=(productId,quantity,selected=true)=>axios.put(`/carts/${productId}`,{quantity,selected})
 // //移除购物车某个产品
-// export const deleteCart=(productId)=>axios.delete(`/carts/${productId}`)
+ export const deleteCart=(productId)=>axios.delete(`/carts/${productId}`)
 // //购物车全选中
-// export const selectAll=()=>axios.put('/carts/selectAll')
+ export const selectAll=()=>axios.put('/carts/selectAll')
 // //购物车全部不选中
-// export const unSelectAll=()=>axios.put('/carts/unSelectAll')
+ export const unSelectAll=()=>axios.put('/carts/unSelectAll')
 // //获取购物中所有商品数量总和
 // export const Sum=()=>axios.get('/carts/products/sum')
 // //添加地址

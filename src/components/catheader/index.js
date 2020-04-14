@@ -2,16 +2,16 @@ import React from 'react'
 import './index.scss'
 const CatHeader=(props)=>{
     return(
-        <div class="catheader">
-        <div class="container">
-            <div class="logo">
-                <a href="/#/index" class="logoLeft"></a>
+        <div className="catheader">
+        <div className="container">
+            <div className="logo">
+                <a href="/#/index" className="logoLeft"></a>
             </div>
-            {/* <div class="title">
+            {/* <div className="title">
                 <a href="javasccript:;">{{title}}</a>
                 <slot name="tip"></slot>
             </div>
-            <div class="name">{{username}}</div> */}
+            <div className="name">{{username}}</div> */}
         </div>
     </div>
     )

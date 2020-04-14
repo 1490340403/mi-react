@@ -19,10 +19,10 @@ class Index extends React.Component{
         this.props.history.push('/login')
     }
     goOrderList=()=>{
-
+        this.props.history.push('/order/cart')
     }
     goCart=()=>{
-        console.log(1)
+        
     }
     render(){
         const {headerData,userInfo}=this.props

@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from '../../components/header'
+import CatHeader from '../../components/catheader'
 import Footer from '../../components/footer'
 import { Route, Switch, Redirect} from "react-router-dom"
 import Alipay from '../alipay'
@@ -10,7 +10,7 @@ import OrderPay from '../orderPay'
 class Order extends React.Component{
     render(){
         return(<div>
-             <Header></Header>
+             <CatHeader></CatHeader>
               <Switch>
                   <Route path="/order/orderList" component={OrderList}/>
                   <Route path="/order/orderPay" component={OrderPay }/>

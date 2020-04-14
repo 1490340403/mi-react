@@ -3,6 +3,8 @@ import {
     INDEX_SWIPER,
     LOGIN,
     ADD_CAR,
+    DEL_CART,
+    ADD_NUM,
     GET_INFO,
     USER_INFO,
     HOME_DATA,
@@ -12,7 +14,14 @@ import {
     SLIDE_DATA
 } from './actionType.js'
 import cookie from 'react-cookies'
-import {proDetail,slideData,proDetails,login,info,addCart,cartList} from '../request/http'
+import {proDetail,slideData,
+    proDetails,login,info,addCart,
+    cartList,
+    updateNum,
+    deleteCart,
+    selectAll,
+    unSelectAll
+} from '../request/http'
  const changeBtnTextType = () => ({ type: HOME_DATA, num: 2})
 export const changeBtnText=()=>{
     return dispatch=>{
@@ -52,7 +61,6 @@ const product=(data)=>({
     data
 })
 export const getProductDetail=(id)=>{
-    console.log(id,id)
     return async dispatch=>{
         const data=await proDetails(id)
         dispatch(product(data))
@@ -82,7 +90,6 @@ const addCar_type=(data)=>({
 export const add_car=(productId)=>{
     return async dispatch=>{
         const data = await addCart(productId)
-        console.log(data)
         dispatch(addCar_type(data))
     }
 }
@@ -93,6 +100,30 @@ const carList_type=(data)=>({
 export const getCarList=()=>{
     return async dispatch=>{
         const data=await cartList()
+        dispatch(carList_type(data))
+    }
+}
+export const getAddNum=(id,quantity,selected)=>{
+    return async dispatch=>{
+        const data=await updateNum(id,quantity,selected)
+        dispatch(carList_type(data))
+    }
+}
+export const getDelCart=(id)=>{
+    return async dispatch=>{
+        const data=await deleteCart(id)
+        dispatch(carList_type(data))
+    }
+}
+export const getunSelectAll=()=>{
+    return async dispatch=>{
+        const data=await unSelectAll()
+        dispatch(carList_type(data))
+    }
+}
+export const getSelectAll=()=>{
+    return async dispatch=>{
+        const data=await selectAll()
         dispatch(carList_type(data))
     }
 }

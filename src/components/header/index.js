@@ -1,7 +1,6 @@
 import React ,{Component} from 'react'
 import './index.scss'
 const Header=(props)=>{
-    {console.log(props)}
     const {headerData,logyot,goLogin,goOrderList,goCart,userInfo}=props.headeProps
     return(
         <div className="header-container">
@@ -18,7 +17,7 @@ const Header=(props)=>{
                         userInfo.username?<p style={{display:"inline-block"}}>
                             <a href="javascript:;" >{userInfo.username}</a>
                             <a href="javascript:;"  onClick={()=>this.logyot()}>退出</a>
-                            <a href="javascript:;"  onClick={()=>this.goOrderList()}>我的订单</a> 
+                            <a href="javascript:;"  onClick={goOrderList}>我的订单</a> 
                         </p>:<a href="javascript:;"  onClick={()=>this.goLogin()}>登陆</a>
                     }
                     {/* <a href="javascript:;" v-if="username">{{username}}</a>

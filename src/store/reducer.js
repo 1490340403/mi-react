@@ -3,6 +3,7 @@ import {
     SLIDE_DATA,
     INDEX_SWIPER,
     LOGIN,
+    ADD_NUM,
     ADD_CAR,
     USER_INFO,
     HOME_DATA,
