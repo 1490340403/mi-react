@@ -3,8 +3,7 @@ import {
     INDEX_SWIPER,
     LOGIN,
     ADD_CAR,
-    DEL_CART,
-    ADD_NUM,
+    ORDER_LIST,
     GET_INFO,
     USER_INFO,
     HOME_DATA,
@@ -20,7 +19,8 @@ import {proDetail,slideData,
     updateNum,
     deleteCart,
     selectAll,
-    unSelectAll
+    unSelectAll,
+    orderList
 } from '../request/http'
  const changeBtnTextType = () => ({ type: HOME_DATA, num: 2})
 export const changeBtnText=()=>{
@@ -125,5 +125,15 @@ export const getSelectAll=()=>{
     return async dispatch=>{
         const data=await selectAll()
         dispatch(carList_type(data))
+    }
+}
+const orderList_type=(data)=>({
+    type:ORDER_LIST,
+    data
+})
+export const getOrderList=(pageNum)=>{
+    return async dispatch=>{
+        const data=await orderList(pageNum)
+        dispatch (orderList_type(data))
     }
 }

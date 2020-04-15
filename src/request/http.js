@@ -30,6 +30,13 @@ export const slideData=()=>axios.get('/products',{
 })
 // //购物车列表
  export const cartList=()=>axios.get('/carts')
+ //订单列表
+ export const  orderList=(pageNum=1)=>axios.get('/orders',{
+     params:{
+        pageSize:10,
+        pageNum
+     }
+ })
 // 购物车加商品
 export const addCart=(productId)=>axios.post('/carts',{selected:true,productId})
 // //更新购物城产品

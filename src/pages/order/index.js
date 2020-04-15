@@ -12,7 +12,7 @@ class Order extends React.Component{
         return(<div>
              <CatHeader></CatHeader>
               <Switch>
-                  <Route path="/order/orderList" component={OrderList}/>
+                  <Route path="/order/list" component={OrderList}/>
                   <Route path="/order/orderPay" component={OrderPay }/>
                   <Route path="/order/orderConfirm" component={OrderConfirm}/>
                   <Route path="/order/alipay" component={Alipay}/>

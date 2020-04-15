@@ -9,7 +9,8 @@ import {
     HOME_DATA,
     PRO_DETAIL,
     CART_LIST,
-    ADDRESS
+    ADDRESS,
+    ORDER_LIST
 } from './actionType.js'
 const defaultState={
     headerData:[],
@@ -19,6 +20,7 @@ const defaultState={
     userInfo:{},
     carList:{},
     cartData:[],
+    orderList:[],
     num:1
 }
 export default(state=defaultState,action)=>{
@@ -62,6 +64,11 @@ export default(state=defaultState,action)=>{
             return {
                 ...state,
                 cartData:action.data
+            }
+        case ORDER_LIST:
+            return {
+                ...state,
+                orderList:action.data
             }
         default:
             return state
