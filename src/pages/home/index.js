@@ -170,7 +170,7 @@ class Home extends React.Component{
                         <div className="swiper-wrapper" >
                             {
                                 this.slideList&&this.slideList.length>0?this.slideList.map((item,index)=>
-                                <div className="swiper-slide" key={index} onClick={()=>this.goPro(item.id)}>
+                                <div className="swiper-slide index-swiper" key={index} onClick={()=>this.goPro(item.id)}>
                                     <img src={item.img}/>
                                 </div>
                                 ):''

@@ -2,14 +2,19 @@ import React from 'react'
 import './index.scss'
 import {orderList} from '../../request/http'
 import {connect} from 'react-redux'
+import { Pagination } from 'antd';
+
 import {getOrderList} from '../../store/actions'
 
 class OrderList extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            data:props.orderList
+            
         }
+    }
+    changeSize=(num)=>{
+      this.props.getOrderList(num)
     }
    componentDidMount(){
 
@@ -22,21 +27,22 @@ class OrderList extends React.Component{
         
     }
     render(){
-        console.log(this.state.data,888)
+        const {list,pageNum,total}=this.props.orderList
         return(
         <div className="order-list">
-         {/* <div className="wrapper">
-          <div className="container" ref="bscroll">
+          <div className="wrapper">
+          <div className="container">
             <div className="order-box"  >
-               <!-- <Loading v-if="loding"/> -->
-              <div className="order" v-for="(item,index) in list" :key="index">
+                {
+                  list&&list.length>0?list.map((item,index)=>(
+                    <div className="order"  key={index}>
                 <div className="order-title">
                   <div className="item-info fl">
                      {item.createTime}
                     <span>|</span>
                      {item.receiverName}
                     <span>|</span>
-                    订单号：{{item.orderNo}
+                    订单号：{item.orderNo}
                     <span>|</span>
                     {item.paymentTypeDesc}
                   </div>
@@ -48,26 +54,34 @@ class OrderList extends React.Component{
                 </div>
                 <div className="order-content clearfix">
                   <div className="good-box fl">
-                    <div className="good-list" v-for="(items,indexs) in item.orderItemVoList" :key='indexs'>
-                      <div className="good-img">
-                         <img src="" alt="" > 
+                    {
+                      item.orderItemVoList.map((items,indexs)=>(
+                        <div className="good-list"  key={indexs}>
+                        <div className="good-img">
+                           <img src={items.productImage} alt="" /> 
+                        </div>
+                        <div className="good-name">
+                          <div className="p-name">{items.productName}</div>
+                          <div className="p-money">{items.totalPrice} X {items.quantity}个</div>
+                        </div>
                       </div>
-                      <div className="good-name">
-                        <div className="p-name">{items.productName}</div>
-                        <div className="p-money">{items.totalPrice} X {items.quantity}元</div>
-                      </div>
-                    </div>
-                  </div>
+                      ))
+                    }
+                  
                   <div className="good-state fr">
-                    <a href="javascript:;">未支付</a>
+                  <a href="javascript:;">{item.statusDesc}</a>
                   </div>
                 </div>
               </div>
-            //    <!-- <NoData v-if="noData"></NoData> -->
-         
-            </div>
-          </div> */}
-        {/* </div> */}
+              </div>
+                  )):''
+                }
+          
+         </div>
+           </div>
+           <Pagination defaultCurrent={1} current={pageNum} onChange={(pageNum)=>this.changeSize(pageNum)} total={total} />
+         </div> 
+        
       </div>)
     }
 }
