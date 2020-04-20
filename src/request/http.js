@@ -50,14 +50,16 @@ export const addCart=(productId)=>axios.post('/carts',{selected:true,productId})
 // //获取购物中所有商品数量总和
 // export const Sum=()=>axios.get('/carts/products/sum')
 // //添加地址
-// export const address=(params)=>axios.post('/shippings',params)
+ export const address=(params)=>axios.post(`/shippings`,params)
+ // //修改地址
+ export const editaddress=(params,id)=>axios.put(`/shippings/${id}`,params)
 // //删除地址
-// export const delAddress=(shippingId)=>axios.delete(`/shippings/${shippingId}`)
+ export const delAddress=(shippingId)=>axios.delete(`/shippings/${shippingId}`)
 // //登录状态更新地址
 // export const updateAddress=(shippingId,params)=>axios.put(`/shippings/${shippingId}`,params)
 // //选中查看具体的地址
 // export const lookAddress=(shippingId)=>axios.get(`/shipping/${shippingId}`)
 // //地址列表
-// export const addressList=()=>axios.get('/shipping')
+export const addressList=()=>axios.get('/shippings')
 // //支付方式
 // export const pay=(params)=>axios.post('/pay',params)

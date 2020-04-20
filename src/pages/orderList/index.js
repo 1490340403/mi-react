@@ -69,7 +69,7 @@ class OrderList extends React.Component{
                     }
                   
                   <div className="good-state fr">
-                  <a href="javascript:;">{item.statusDesc}</a>
+                  <a href="javascript:;" onClick={()=>this.props.history.push('/order/orderConfirm')}>{item.statusDesc}</a>
                   </div>
                 </div>
               </div>

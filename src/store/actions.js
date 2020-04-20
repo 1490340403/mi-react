@@ -20,7 +20,8 @@ import {proDetail,slideData,
     deleteCart,
     selectAll,
     unSelectAll,
-    orderList
+    orderList,
+    addressList
 } from '../request/http'
  const changeBtnTextType = () => ({ type: HOME_DATA, num: 2})
 export const changeBtnText=()=>{
@@ -135,5 +136,15 @@ export const getOrderList=(pageNum)=>{
     return async dispatch=>{
         const data=await orderList(pageNum)
         dispatch (orderList_type(data))
+    }
+}
+const address_type=(data)=>({
+    type:ADDRESS,
+    data
+})
+export const getAddressList=()=>{
+    return async dispatch=>{
+        const data=await addressList()
+        dispatch(address_type(data))
     }
 }

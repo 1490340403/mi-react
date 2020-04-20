@@ -21,6 +21,7 @@ const defaultState={
     carList:{},
     cartData:[],
     orderList:[],
+    addressList:[],
     num:1
 }
 export default(state=defaultState,action)=>{
@@ -69,6 +70,11 @@ export default(state=defaultState,action)=>{
             return {
                 ...state,
                 orderList:action.data
+            }
+        case ADDRESS:
+            return{
+                ...state,
+                addressList:action.data
             }
         default:
             return state
