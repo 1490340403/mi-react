@@ -3,14 +3,8 @@ import './index.scss'
 import {connect} from 'react-redux'
 import '../../static/iconfont.css'
 import { Modal,Form,Input ,Button,Select,message} from 'antd';
-import {address,editaddress,delAddress} from '../../request/http'
+import {address,editaddress,delAddress,postCar} from '../../request/http'
 import {getAddressList,getCarList}from '../../store/actions'
-const { Option } = Select;
-const { TextArea } = Input;
-const layout = {
-  labelCol: { span: 4 },
-  wrapperCol: { span: 16},
-};
 class OrderConfirm extends React.Component{
   constructor(props){
     super(props)
@@ -25,7 +19,7 @@ class OrderConfirm extends React.Component{
       receiverZip:"",
       id:0,
       indexs:0,
-      cartData:props.cartData
+     
     }
   }
  
@@ -43,8 +37,16 @@ class OrderConfirm extends React.Component{
       receiverZip:item.receiverZip
     })
   }
-  handleCancel=()=>{
-
+  sub=()=>{
+    let item = this.props.addressList.list[this.state.indexs];
+    if(!item){
+      message.error('请选择一个收货地址');
+      return;
+    }
+    postCar(item.id).then(res=>{
+      this.props.history.push( `/order/orderPay/${res.orderNo}`)
+    })
+   
   }
   close=()=>{
     this.setState({
@@ -58,6 +60,11 @@ class OrderConfirm extends React.Component{
       receiverZip:"",
       id:0,
      
+    })
+  }
+  add=()=>{
+    this.setState({
+      visible:true
     })
   }
   submit=async()=>{
@@ -111,7 +118,7 @@ class OrderConfirm extends React.Component{
         this.props.getCarList()
     }
     render(){
-        const {addressList}=this.props
+        const {addressList,cartData}=this.props
         const { visible,
           receiverName,
           receiverMobile,
@@ -119,7 +126,7 @@ class OrderConfirm extends React.Component{
           receiverCity,
           receiverDistrict,
           receiverAddress,
-          receiverZip,indexs,cartData}=this.state
+          receiverZip,indexs}=this.state
         return(
             <div className="orderConfirm">
     <div className="wrapper">
@@ -160,12 +167,12 @@ class OrderConfirm extends React.Component{
           <div className="item-good">
             <h2>商品</h2>
             <ul>
-              {console.log(cartData)}
+         
               {
-                cartData.cartProductVoList&&cartData.cartProductVoList.legnth>0?cartData.cartProductVoList.map(item=>(
+                cartData.cartProductVoList&&cartData.cartProductVoList.length>0?cartData.cartProductVoList.map(item=>(
                   <li >
                   <div className="good-name">
-                    <img src="item.productMainImage" alt=""/>
+                    <img src={item.productMainImage} alt=""/>
                     <span>{item.productName +' '+item.productName}</span>
                   </div>
                   <div className="good-price">{item.productPrice}元x{item.quantity}</div>
@@ -189,11 +196,11 @@ class OrderConfirm extends React.Component{
           <div className="detail">
             <div className="item">
               <span className="item-name">商品件数：</span>
-              {/* <span className="item-val">{totalNum}件</span> */}
+               <span className="item-val">{cartData.cartTotalQuantity}件</span>
             </div>
             <div className="item">
               <span className="item-name">商品总价：</span>
-              {/* <span className="item-val">{cartTotalPrice}元</span> */}
+               <span className="item-val">{cartData.cartTotalPrice}元</span> 
             </div>
             <div className="item">
               <span className="item-name">优惠活动：</span>
@@ -205,7 +212,7 @@ class OrderConfirm extends React.Component{
             </div>
             <div className="item-total">
               <span className="item-name">应付总额：</span>
-              {/* <span className="item-val">{cartTotalPrice}元</span> */}
+               <span className="item-val">{cartData.cartTotalPrice}元</span>
             </div>
           </div>
           <div className="btn-group">
