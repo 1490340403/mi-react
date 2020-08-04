@@ -51,20 +51,26 @@
               box-sizing: border-box;
             }
           }
-          .btn{
-            width:100%;
-            line-height:50px;
-            margin-top:10px;
-            font-size:16px;
-            display: inline-block;
+          .btn-box{
             width: 348px;
-            line-height: 60px;
-            text-align: center;
-            background-color: #f60;
-            color: #fff;
-            border: none;
-            cursor: pointer;
+            height:60px;
+            margin-left: -40px;
+            .btn{
+              width:100%;
+              
+              margin-top:10px;
+              font-size:16px;
+              display: inline-block;
+              
+              line-height: 60px;
+              text-align: center;
+              background-color: #f60;
+              color: #fff;
+              border: none;
+              cursor: pointer;
+            }
           }
+          
           .tips{
             margin-top:14px;
             display:flex;

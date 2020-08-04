@@ -1,81 +1,69 @@
-import React from 'react'
+import React,{useEffect,useState,useCallback} from 'react'
 import './index.scss'
-import {connect} from 'react-redux'
+import {useSelector,useDispatch} from 'react-redux'
 import '../../static/iconfont.css'
 import { Modal,Form,Input ,Button,Select,message} from 'antd';
 import {address,editaddress,delAddress,postCar} from '../../request/http'
 import {getAddressList,getCarList}from '../../store/actions'
-class OrderConfirm extends React.Component{
-  constructor(props){
-    super(props)
-    this.state={
-      visible:false,
-      receiverName:'',
-      receiverMobile:'',
-      receiverProvince:"",
-      receiverCity:'',
-      receiverDistrict:"",
-      receiverAddress:"",
-      receiverZip:"",
-      id:0,
-      indexs:0,
-     
-    }
-  }
- 
-  edit=(item)=>{
+function OrderConfirm (props){
+  const dispatch=useDispatch()
+  const addressList=useSelector(state=>state.addressList)
+  const cartData=useSelector(state=>state.cartDatat)
+       
+  const [visible,setVisible]=useState(false)
+  const [receiverName,setReceiverName]=useState('')
+  const [receiverMobile,setReceiverMobile]=useState('')
+  const [receiverProvince,setReceiverProvince]=useState('')
+  const [receiverCity,setReceiverCity]=useState('')
+  const [receiverDistrict,setReceiverDistrict]=useState('')
+  const [receiverAddress,setReceiverAddress]=useState('')
+  const [receiverZip,setReceiverZip]=useState('')
+  const [id,setId]=useState(0)
+  const [indexs,setIndex]=useState(0)
+  useEffect(()=>{
+    dispatch(getAddressList())
+    dispatch(getCarList())
+  },[])
+  const  edit=useCallback( (item)=>{
     console.log(item)
-    this.setState({
-      id:item.id,
-      visible:true,
-      receiverName:item.receiverName,
-      receiverMobile:item.receiverMobile,
-      receiverProvince:item.receiverProvince,
-      receiverCity:item.receiverCity,
-      receiverDistrict:item.receiverDistrict,
-      receiverAddress:item.receiverAddress,
-      receiverZip:item.receiverZip
-    })
-  }
-  sub=()=>{
-    let item = this.props.addressList.list[this.state.indexs];
+    setId(item.id)
+    setVisible(true)
+    setReceiverMobile(item.receiverMobile)
+    setReceiverName(item.receiverName)
+    setReceiverProvince(item.receiverProvince)
+    setReceiverCity(item.receiverCity)
+    setReceiverDistrict(item.receiverDistrict)
+    setReceiverAddress(item.receiverAddress)
+    setReceiverZip(item.receiverZip)
+ 
+  },[])
+  const  sub=useCallback( ()=>{
+    let item = addressList.list[this.state.indexs];
     if(!item){
       message.error('请选择一个收货地址');
       return;
     }
     postCar(item.id).then(res=>{
-      this.props.history.push( `/order/orderPay/${res.orderNo}`)
+      props.history.push( `/order/orderPay/${res.orderNo}`)
     })
    
-  }
-  close=()=>{
-    this.setState({
-      visible:false,
-      receiverName:'',
-      receiverMobile:'',
-      receiverProvince:"",
-      receiverCity:'',
-      receiverDistrict:"",
-      receiverAddress:"",
-      receiverZip:"",
-      id:0,
-     
-    })
-  }
-  add=()=>{
-    this.setState({
-      visible:true
-    })
-  }
-  submit=async()=>{
-    const { 
-      receiverName,
-      receiverMobile,
-      receiverProvince,
-      receiverCity,
-      receiverDistrict,
-      receiverAddress,
-      receiverZip,id}=this.state
+  },[])
+  const   close=useCallback( ()=>{
+    setId('')
+    setVisible(false)
+    setReceiverMobile('')
+    setReceiverName('')
+    setReceiverProvince('')
+    setReceiverCity('')
+    setReceiverDistrict('')
+    setReceiverAddress('')
+    setReceiverZip('')
+
+  },[])
+  const   add=useCallback( ()=>{
+    setVisible(true)
+  },[])
+const  submit=useCallback( async()=>{
    const params={
     receiverName,
     receiverMobile,
@@ -94,39 +82,41 @@ class OrderConfirm extends React.Component{
    
    if(data){
     message.success('修改成功...')
-    this.close()
-    this.props.getAddressList()
+    close()
+    dispatch(getAddressList())
    }
-  }
-  del=async (item)=>{
+  },[])
+  const  del=useCallback( async (item)=>{
     const id=item.id
    const data=await delAddress(id)
    if(data){
     message.success('删除成功...')
-    this.close()
-    this.props.getAddressList()
+    close()
+    dispatch(getAddressList())
    }
-  }
-  change=(e,type)=>{
+  },[])
+  const   change=useCallback( (e,type)=>{
     console.log(e.target.value,type)
-    this.setState({
-      [type]:e.target.value
-    })
-  }
-    componentDidMount(){
-        this.props.getAddressList()
-        this.props.getCarList()
+    if(type=='receiverName'){
+      setReceiverName(e.target.value)
+    }else if(type=='receiverMobile'){
+      setReceiverMobile(e.target.value)
+    }else if(type=='receiverProvince'){
+      setReceiverProvince(e.target.value)
+    }else if(type=='receiverCity'){
+      setReceiverCity(e.target.value)
+    }else if(type=='receiverDistrict'){
+      setReceiverDistrict(e.target.value)
     }
-    render(){
-        const {addressList,cartData}=this.props
-        const { visible,
-          receiverName,
-          receiverMobile,
-          receiverProvince,
-          receiverCity,
-          receiverDistrict,
-          receiverAddress,
-          receiverZip,indexs}=this.state
+    else if(type=='receiverAddress'){
+      setReceiverAddress(e.target.value)
+    }else if(type=='receiverZip'){
+      setReceiverZip(e.target.value)
+    }
+  },[])
+   
+
+    
         return(
             <div className="orderConfirm">
     <div className="wrapper">
@@ -139,7 +129,7 @@ class OrderConfirm extends React.Component{
                     addressList.list&&addressList.list.length>0?addressList.list.map((item,index)=>(
                        
                         <div  key={index}  className={indexs==index?'addr-info checked':'addr-info'}
-                         onClick={()=>{this.setState({indexs:index})}}
+                         onClick={setIndex(index)}
                         >
                           
                         <h2>{item.receiverName}</h2>
@@ -147,9 +137,9 @@ class OrderConfirm extends React.Component{
                         <div className="street">{item.receiverProvince +' '+item.receiverCity+' '+
                             item.receiverDistrict}{item.receiverAddress}</div>
                         <div className="action">
-                           <a href="javascript:;" className="fl iconfont iconshanchu font" onClick={()=>this.del(item)}>
+                           <a href="javascript:;" className="fl iconfont iconshanchu font" onClick={()=>del(item)}>
                           </a>
-                          <a href="javascript:;" className="fr iconfont iconxiugai font" onClick={()=>this.edit(item)}>
+                          <a href="javascript:;" className="fr iconfont iconxiugai font" onClick={()=>edit(item)}>
                       
                           </a> 
                         </div> 
@@ -158,7 +148,7 @@ class OrderConfirm extends React.Component{
                 }
               
              
-              <div className="addr-add" onClick={()=>this.add()}>
+              <div className="addr-add" onClick={()=>add()}>
                 <div className="icon-add"></div>
                 <div>添加新地址</div>
               </div>
@@ -217,45 +207,45 @@ class OrderConfirm extends React.Component{
           </div>
           <div className="btn-group">
             <a href="/#/order/cart" className="btn btn-default btn-large">返回购物车</a>
-            <a href="javascript:;" className="btn btn-large" onClick={()=>this.sub()}>去结算</a>
+            <a href="javascript:;" className="btn btn-large" onClick={()=>sub()}>去结算</a>
           </div>
         </div>
       </div>
     </div>
     {
-      this.state.visible?<div className="popBox">
+     visible?<div className="popBox">
       <div className="pop" >
           <div className="popHeader">
-              <div className="close" onClick={()=>this.close()}></div>
+              <div className="close" onClick={()=>close()}></div>
           </div>
           <div  className="popBody" >
           <div className="message">
             
-          <input type="text" placeholder="姓名" value={receiverName} onChange={(e)=>this.change(e,'receiverName')}/>
-          <input type="text" placeholder="手机号" value={receiverMobile} onChange={(e)=>this.change(e,'receiverMobile')}/>
+          <input type="text" placeholder="姓名" value={receiverName} onChange={(e)=>change(e,'receiverName')}/>
+          <input type="text" placeholder="手机号" value={receiverMobile} onChange={(e)=>change(e,'receiverMobile')}/>
         </div>
         <div className="select">
-          <select name="province" value={receiverProvince} onChange={(e)=>this.change(e,'receiverProvince')}>
+          <select name="province" value={receiverProvince} onChange={(e)=>change(e,'receiverProvince')}>
             <option value ="北京">北京</option>
             <option value ="上海">上海</option>
             <option value ="天津">天津</option>
           </select>
-           <select name="city"  value={receiverCity} onChange={(e)=>this.change(e,'receiverCity')}>
+           <select name="city"  value={receiverCity} onChange={(e)=>change(e,'receiverCity')}>
             <option value ="昌平">昌平</option>
             <option value ="宝山">宝山</option>
             <option value ="天津">天津</option>
           </select>
-           <select name="district" value={receiverDistrict} onChange={(e)=>this.change(e,'receiverDistrict')}>
+           <select name="district" value={receiverDistrict} onChange={(e)=>change(e,'receiverDistrict')}>
             <option value ="第一街道">第一街道</option>
             <option value ="第二街道">第二街道</option>
             <option value ="河北">河北</option>
           </select>
         </div>
-        <textarea name="street" value={receiverAddress} onChange={(e)=>this.change(e,'receiverAddress')}></textarea>
-        <input type="text" placeholder="邮编" className="youbian" onChange={(e)=>this.change(e,'receiverZip')} value={receiverZip}/>
+        <textarea name="street" value={receiverAddress} onChange={(e)=>change(e,'receiverAddress')}></textarea>
+        <input type="text" placeholder="邮编" className="youbian" onChange={(e)=>change(e,'receiverZip')} value={receiverZip}/>
           </div>
           <div className="popFooter">
-              <div className="btn1" onClick={()=>this.submit()}>提交</div>
+              <div className="btn1" onClick={()=>submit()}>提交</div>
           </div>
       </div>
   </div>:""
@@ -266,17 +256,4 @@ class OrderConfirm extends React.Component{
     
         )
     }
-}
-const mapState=(state)=>{
-    return {
-        addressList:state.addressList,
-        cartData:state.cartData
-    }
-}
-const mapDispatch=(dispatch)=>{
-    return {
-        getAddressList:()=>dispatch(getAddressList()),
-        getCarList:()=>dispatch(getCarList())
-    }
-}
-export default connect(mapState,mapDispatch)(OrderConfirm) 
+export default OrderConfirm

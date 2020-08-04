@@ -1,6 +1,6 @@
-import React ,{Component} from 'react'
+import React ,{memo} from 'react'
 import './index.scss'
-const Header=(props)=>{
+const Header=memo(props=>{
     const {headerData,logyot,goLogin,goOrderList,goCart,userInfo}=props.headeProps
     return(
         <div className="header-container">
@@ -66,4 +66,5 @@ const Header=(props)=>{
     </div>
     )
 }
+)
 export default Header

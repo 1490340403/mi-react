@@ -1,28 +1,27 @@
-import React from 'react'
-import {connect} from 'react-redux'
+import React,{useState} from 'react'
+import {useSelector,useDispatch} from 'react-redux'
 import {getLogin} from '../../store/actions'
 import './index.scss'
-class Login extends React.Component{
-    state={
-        username:'',
-        password:''
-    }
-    componentDidMount(){
-        
-    }
+function Login(props){
+   const [username,setUsername]=useState('')
+   const [password,setPassword]=useState('')
+   const dispatch = useDispatch();
+   function collectionData(e,type){
+     console.log(1)
+     if(type=='username'){
+      setUsername(e.target.value)
+     }else{
+      setPassword(e.target.value)
+     }
+   }
+   function login(){
+     console.log(props,dispatch,89)
+     dispatch(getLogin({username,password})).then(()=>{
+      props.history.push('/')
+     })
     
-    collectionData=(e,type)=>{
-        this.setState({
-            [type]:e.target.value
-        })
-    }
-    login=()=>{
-        const {username,password}=this.state
-       this.props.getLogin({username,password}).then(()=>{
-           this.props.history.push('/')
-       })
-    }
-    render(){
+   
+   }
     return(
         <div className="login">
     <div className="container">
@@ -35,13 +34,13 @@ class Login extends React.Component{
             <span className="checked">帐号登录</span><span className="sep-line">|</span><span>扫码登录</span>
           </h3>
           <div className="input">
-            <input type="text" placeholder="请输入帐号"  onChange={(e)=>this.collectionData(e,'username')}/>
+            <input type="text" placeholder="请输入帐号"  onChange={(e)=>collectionData(e,'username')}/>
           </div>
           <div className="input">
-            <input type="password" placeholder="请输入密码"  onChange={(e)=>this.collectionData(e,'password')}/>
+            <input type="password" placeholder="请输入密码"  onChange={(e)=>collectionData(e,'password')}/>
           </div>
           <div className="btn-box">
-            <a href="javascript:;" className="btn" onClick={()=>this.login()}>登录</a>
+            <a href="javascript:;" className="btn" onClick={login}>登录</a>
           </div>
           <div className="tips">
             <div className="sms" onClick="register">手机短信登录/注册</div>
@@ -61,16 +60,5 @@ class Login extends React.Component{
     </div>
   </div>
     )
-    }
 }
-const mapState=(state)=>{
-    return {
-        
-    }
-}
-const mapDispatch=(dispatch)=>{
-    return{
-        getLogin:(params)=>dispatch(getLogin(params))
-    }
-}
-export default connect(mapState,mapDispatch)(Login)
+export default Login

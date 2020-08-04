@@ -1,38 +1,40 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import Header from '../../components/header'
 import Footer from '../../components/footer'
-import {BrowserRouter as Router, Route, Switch, Redirect, NavLink} from "react-router-dom"
+import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom"
 import Home from '../home'
 import Product from '../product'
 import Detail from '../detail'
-import {connect} from 'react-redux'
+import {useSelector,useDispatch} from 'react-redux'
 import {getHeaderData,getInfo} from '../../store/actions'
-class Index extends React.Component{
-    componentDidMount(){
-        this.props.getHeaderData()
-        this.props.getInfo()
+function Index(props){
+    const dispatch = useDispatch();
+    const headerData=useSelector(state => state.headerData)
+    const userInfo=useSelector(state => state.userInfo)
+    useEffect(()=>{
+        dispatch(getHeaderData())
+        dispatch(getInfo())
+    },[])
+    function logyot (){
+        console.log('退出了...')
     }
-    logyot=()=>{
-
+    function goLogin(){
+        props.history.push('/login')
     }
-    goLogin=()=>{
-        this.props.history.push('/login')
+    function goOrderList(){
+        props.history.push('/order/list')
     }
-    goOrderList=()=>{
-        this.props.history.push('/order/list')
+    function goCart(){
+        console.log('去购物车...')
     }
-    goCart=()=>{
-        
-    }
-    render(){
-        const {headerData,userInfo}=this.props
+  
         const headProps={
             userInfo,
             headerData,
-            logyot:this.logyot,
-            goLogin:this.goLogin,
-            goOrderList:this.goOrderList,
-            goCart:this.goCart
+            logyot:logyot,
+            goLogin:goLogin,
+            goOrderList:goOrderList,
+            goCart:goCart
         }
         return(<div>
             <Header headeProps={headProps}></Header>
@@ -46,17 +48,5 @@ class Index extends React.Component{
             <Footer></Footer>
         </div>)
     }
-}
-const mapState=(state)=>{
-    return {
-        headerData:state.headerData,
-        userInfo:state.userInfo
-    }
-}
-const mapDispatch=(dispatch)=>{
-    return{
-        getHeaderData:()=>dispatch(getHeaderData()),
-        getInfo:()=>dispatch(getInfo())
-    }
-}
-export default connect(mapState,mapDispatch)(Index) 
+
+export default Index

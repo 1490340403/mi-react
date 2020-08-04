@@ -1,33 +1,20 @@
-import React from 'react'
+import React,{useEffect,useCallback,useState} from 'react'
 import './index.scss'
 import {orderList} from '../../request/http'
-import {connect} from 'react-redux'
+import {connect,useSelector,useDispatch} from 'react-redux'
 import { Pagination } from 'antd';
 
-import {getOrderList} from '../../store/actions'
-
-class OrderList extends React.Component{
-    constructor(props){
-        super(props)
-        this.state={
-            
-        }
-    }
-    changeSize=(num)=>{
-      this.props.getOrderList(num)
-    }
-   componentDidMount(){
-
-         this.props.getOrderList(1)
-        
-        
-        // if(this.props.orderList&&this.props.orderList.total>0){
-        //     console.log(this.props.orderList,998)
-        // }
-        
-    }
-    render(){
-        const {list,pageNum,total}=this.props.orderList
+import {getOrderList, getCarList} from '../../store/actions'
+function OrderList(props){
+     const dispatch=useDispatch()
+     const [num,setNum]=useState(1)
+     const {list,pageNum,total}=useSelector(state=>state.orderList)
+    const changeSize=useCallback((num)=>{
+      setNum(num)
+    },[num])
+    useEffect(()=>{
+      dispatch(getOrderList(num))
+    },[num])
         return(
         <div className="order-list">
           <div className="wrapper">
@@ -69,30 +56,19 @@ class OrderList extends React.Component{
                     }
                   
                   <div className="good-state fr">
-                  <a href="javascript:;" onClick={()=>this.props.history.push('/order/orderConfirm')}>{item.statusDesc}</a>
+                  <a href="javascript:;" onClick={()=>props.history.push('/order/orderConfirm')}>{item.statusDesc}</a>
                   </div>
                 </div>
               </div>
               </div>
                   )):''
                 }
-          
          </div>
            </div>
-           <Pagination defaultCurrent={1} current={pageNum} onChange={(pageNum)=>this.changeSize(pageNum)} total={total} />
+           <Pagination defaultCurrent={1} current={pageNum} onChange={(pageNum)=>changeSize(pageNum)} total={total} />
          </div> 
-        
       </div>)
     }
-}
-const mapState=(state)=>{
-    return {
-        orderList:state.orderList
-    }
-}
-const mapDiapatch=(dispatch)=>{
-    return{
-        getOrderList:(pageNum)=>dispatch(getOrderList(pageNum))
-    }
-}
-export default connect(mapState,mapDiapatch)(OrderList) 
+
+
+export default OrderList
