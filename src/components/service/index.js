@@ -1,6 +1,6 @@
-import React from 'react'
+import React ,{memo}from 'react'
 import './index.scss'
- const Service=()=>{
+ const Service=memo(()=>{
     return(
         <div className="service">
             <ul>
@@ -23,5 +23,5 @@ import './index.scss'
             </ul>
         </div>
     )
-}
+})
 export default Service

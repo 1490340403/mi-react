@@ -1,6 +1,6 @@
-import React from 'react'
+import React,{memo} from 'react'
 import './index.scss'
-const parms=(props)=>{
+const parms=memo((props)=>{
     return (
         <div className="params_box" >
             <div className="container">
@@ -14,6 +14,5 @@ const parms=(props)=>{
             </div>
         </div>
     )
-
-}
+})
 export default parms

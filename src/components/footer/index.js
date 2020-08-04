@@ -1,6 +1,6 @@
-import React from 'react'
+import React,{memo} from 'react'
 import  './index.scss'
-const Footer=(props)=>{
+const Footer=memo((props)=>{
     return(
         <div className="footer">
             <div className="logo">
@@ -18,5 +18,5 @@ const Footer=(props)=>{
             </div>
         </div>
     ) 
-}
+})
 export default Footer

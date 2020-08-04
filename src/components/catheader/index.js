@@ -1,6 +1,6 @@
-import React from 'react'
+import React ,{memo}from 'react'
 import './index.scss'
-const CatHeader=(props)=>{
+const CatHeader=memo((props)=>{
     return(
         <div className="catheader">
         <div className="container">
@@ -15,5 +15,5 @@ const CatHeader=(props)=>{
         </div>
     </div>
     )
-}
+})
 export default CatHeader
